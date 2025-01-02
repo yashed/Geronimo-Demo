@@ -224,25 +224,76 @@ function ContactUsForm() {
       {responseData && (
         <div style={{ marginTop: "20px" }}>
           <h2>Generated Data</h2>
-          <p>
-            <strong>Professional Summary:</strong>{" "}
-            {responseData.professional_summary}
-          </p>
-          <p>
-            <strong>Social Media Links:</strong>{" "}
-            {responseData.social_media_links}
-          </p>
-          <p>
-            <strong>Company Summary:</strong> {responseData.company_summary}
-          </p>
-          <p>
-            <strong>Company Competitors:</strong>{" "}
-            {responseData.company_competitors}
-          </p>
-          <p>
-            <strong>Additional Insights:</strong>{" "}
-            {responseData.additional_insights}
-          </p>
+
+          {responseData.professional_summary && (
+            <p>
+              <strong>Professional Summary:</strong>{" "}
+              {responseData.professional_summary}
+            </p>
+          )}
+
+          {responseData.social_media_links && (
+            <div>
+              <strong>Social Media Links:</strong>
+              <ul>
+                {Object.entries(responseData.social_media_links).map(
+                  ([platform, link], index) => (
+                    <li key={index}>
+                      <strong>{platform}:</strong>{" "}
+                      <a href={link} target="_blank" rel="noopener noreferrer">
+                        {link}
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
+
+          {responseData.company_summary && (
+            <p>
+              <strong>Company Summary:</strong> {responseData.company_summary}
+            </p>
+          )}
+
+          {responseData.company_competitors && (
+            <p>
+              <strong>Company Competitors:</strong>{" "}
+              {responseData.company_competitors}
+            </p>
+          )}
+
+          {responseData.additional_insights && (
+            <div>
+              <strong>Additional Insights:</strong>
+              {Array.isArray(responseData.additional_insights) ? (
+                <ul>
+                  {responseData.additional_insights.map((insight, index) => (
+                    <li key={index}>
+                      <p>
+                        <strong>Title:</strong> {insight.title}
+                      </p>
+                      <p>
+                        <strong>URL:</strong>{" "}
+                        <a
+                          href={insight.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {insight.url}
+                        </a>
+                      </p>
+                      <p>
+                        <strong>Description:</strong> {insight.description}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{responseData.additional_insights}</p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
