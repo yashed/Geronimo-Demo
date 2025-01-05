@@ -32,7 +32,7 @@ function ContactUsForm() {
     setResponseData(null); // Clear previous response
 
     try {
-      const response = await fetch("http://localhost:8000/generate_data/", {
+      const response = await fetch("https://bd3b73b5-b360-4c52-b210-5519f6919d65-dev.e1-us-east-azure.choreoapis.dev/testgeronimo/geronimo-v1-1/v1.0/generate_data/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
