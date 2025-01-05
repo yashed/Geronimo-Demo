@@ -15,8 +15,7 @@ function ContactUsForm() {
   });
 
   const [responseData, setResponseData] = useState(null);
-  const [loading, setLoading] = useState(false); // New state for loader
-
+  const [loading, setLoading] = useState(false); 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
