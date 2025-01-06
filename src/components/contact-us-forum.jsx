@@ -46,6 +46,7 @@ function ContactUsForm() {
             country: formData.country,
             position: formData.jobRole,
             interest: formData.areaOfInterest,
+            email: formData.email,
           }),
         }
       );
