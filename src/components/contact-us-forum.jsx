@@ -206,7 +206,7 @@ function ContactUsForm() {
               border: "none",
               cursor: "pointer",
             }}
-            disabled={loading} // Disable the button while loading
+            disabled={loading}
           >
             {loading ? "Submitting..." : "Submit"}
           </button>
@@ -232,22 +232,29 @@ function ContactUsForm() {
             </p>
           )}
 
-          {responseData.social_media_links && (
+          {responseData.social_media_links &&
+          responseData.social_media_links.length > 0 ? (
             <div>
               <strong>Social Media Links:</strong>
               <ul>
-                {Object.entries(responseData.social_media_links).map(
-                  ([platform, link], index) => (
-                    <li key={index}>
-                      <strong>{platform}:</strong>{" "}
-                      <a href={link} target="_blank" rel="noopener noreferrer">
-                        {link}
-                      </a>
-                    </li>
-                  )
-                )}
+                {responseData.social_media_links.map((link, index) => (
+                  <li key={index}>
+                    <strong>{link.platform}:</strong>{" "}
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {link.url}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
+          ) : (
+            <p>
+              <strong>Social Media Links:</strong> Not Found
+            </p>
           )}
 
           {responseData.company_summary && (
@@ -263,36 +270,37 @@ function ContactUsForm() {
             </p>
           )}
 
-          {responseData.additional_insights && (
+          {responseData.additional_insights &&
+          responseData.additional_insights.length > 0 ? (
             <div>
               <strong>Additional Insights:</strong>
-              {Array.isArray(responseData.additional_insights) ? (
-                <ul>
-                  {responseData.additional_insights.map((insight, index) => (
-                    <li key={index}>
-                      <p>
-                        <strong>Title:</strong> {insight.title}
-                      </p>
-                      <p>
-                        <strong>URL:</strong>{" "}
-                        <a
-                          href={insight.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {insight.url}
-                        </a>
-                      </p>
-                      <p>
-                        <strong>Description:</strong> {insight.description}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>{responseData.additional_insights}</p>
-              )}
+              <ul>
+                {responseData.additional_insights.map((insight, index) => (
+                  <li key={index}>
+                    <p>
+                      <strong>Title:</strong> {insight.title}
+                    </p>
+                    <p>
+                      <strong>URL:</strong>{" "}
+                      <a
+                        href={insight.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {insight.url}
+                      </a>
+                    </p>
+                    <p>
+                      <strong>Description:</strong> {insight.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ) : (
+            <p>
+              <strong>Additional Insights:</strong> Not Found
+            </p>
           )}
         </div>
       )}
