@@ -15,7 +15,7 @@ function ContactUsForm() {
   });
 
   const [responseData, setResponseData] = useState(null);
-  const [loading, setLoading] = useState(false); // New state for loader
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -29,8 +29,8 @@ function ContactUsForm() {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
 
-    setLoading(true); // Show loader while submitting
-    setResponseData(null); // Clear previous response
+    setLoading(true);
+    setResponseData(null);
 
     try {
       const response = await fetch("http://localhost:8000/generate_data/", {
@@ -60,39 +60,20 @@ function ContactUsForm() {
       console.error("Error submitting form:", error);
       alert("There was an error with the submission. Please try again.");
     } finally {
-      setLoading(false); // Hide loader after request completes
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "700px", margin: "auto", padding: "50px" }}>
-      <h1
-        style={{
-          display: "flex",
-          gap: "10px",
-          marginBottom: "10px",
-          textAlign: "center",
-          justifyContent: "center",
-        }}
-      >
-        Contact Us
-      </h1>
-      <p
-        style={{
-          display: "flex",
-          gap: "10px",
-          marginBottom: "20px",
-          textAlign: "center",
-          justifyContent: "center",
-        }}
-      >
+    <div>
+      <h1 className="form-title">Contact Us</h1>
+      <p className="form-subtitle">
         Please fill out the form, and we’ll get in touch shortly.
       </p>
-      <div>
-        {" "}
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
-          {/* Name Fields */}
-          <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+          {/* Name Field */}
+          <div className="form-group">
             <input
               type="text"
               name="name"
@@ -100,11 +81,12 @@ function ContactUsForm() {
               value={formData.name}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             />
           </div>
 
-          <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+          {/* Email and Phone */}
+          <div className="form-group">
             <input
               type="email"
               name="email"
@@ -112,7 +94,7 @@ function ContactUsForm() {
               value={formData.email}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             />
             <input
               type="tel"
@@ -121,18 +103,18 @@ function ContactUsForm() {
               value={formData.phone}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             />
           </div>
 
           {/* Job Role and Company */}
-          <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+          <div className="form-group">
             <select
               name="jobRole"
               value={formData.jobRole}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             >
               <option value="">Job Role *</option>
               <option value="Developer">Developer/Engineer</option>
@@ -151,18 +133,18 @@ function ContactUsForm() {
               value={formData.company}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             />
           </div>
 
           {/* Country and Area of Interest */}
-          <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+          <div className="form-group">
             <select
               name="country"
               value={formData.country}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             >
               <option value="">Country *</option>
               <option value="USA">USA</option>
@@ -175,135 +157,200 @@ function ContactUsForm() {
               value={formData.areaOfInterest}
               onChange={handleChange}
               required
-              style={{ flex: 1, padding: "10px" }}
+              className="form-input"
             >
               <option value="">Area of Interest *</option>
-              <option value="Technology">Technology</option>
-              <option value="Business">Business</option>
+              <option value="Technology">API Management</option>
+              <option value="Business">Integration</option>
+              <option value="Finance">Identity & Access Management</option>
+              <option value="Finance">Career Opportunities</option>
+              <option value="Finance">Finance</option>
               <option value="Finance">Finance</option>
             </select>
           </div>
 
           {/* Description */}
-          <div style={{ marginBottom: "10px" }}>
+          <div className="form-group">
             <textarea
               name="helpDescription"
-              placeholder="How Can We Help You? (Please provide a description of your requirement)"
+              placeholder="How Can We Help You?"
               value={formData.helpDescription}
               onChange={handleChange}
               required
-              style={{ width: "100%", padding: "10px", height: "80px" }}
+              className="form-textarea"
             />
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            style={{
-              backgroundColor: "#000",
-              color: "#fff",
-              padding: "10px 20px",
-              border: "none",
-              cursor: "pointer",
-            }}
-            disabled={loading}
-          >
+          <button type="submit" className="form-submit" disabled={loading}>
             {loading ? "Submitting..." : "Submit"}
           </button>
         </form>
+
+        {/* Display Response */}
+        {responseData && (
+          <div style={{ marginTop: "20px" }}>
+            {/* Response Data */}
+            {/* Loader */}
+            {loading && (
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <p>Loading...</p>
+              </div>
+            )}
+
+            {/* Display response data */}
+            {responseData && (
+              <div style={{ marginTop: "20px" }}>
+                <h2>Generated Data</h2>
+
+                {responseData.professional_summary && (
+                  <p>
+                    <strong>Professional Summary:</strong>{" "}
+                    {responseData.professional_summary}
+                  </p>
+                )}
+
+                {responseData.social_media_links &&
+                responseData.social_media_links.length > 0 ? (
+                  <div>
+                    <strong>Social Media Links:</strong>
+                    <ul>
+                      {responseData.social_media_links.map((link, index) => (
+                        <li key={index}>
+                          <strong>{link.platform}:</strong>{" "}
+                          <a
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {link.url}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p>
+                    <strong>Social Media Links:</strong> Not Found
+                  </p>
+                )}
+
+                {responseData.company_summary && (
+                  <p>
+                    <strong>Company Summary:</strong>{" "}
+                    {responseData.company_summary}
+                  </p>
+                )}
+
+                {responseData.company_competitors && (
+                  <p>
+                    <strong>Company Competitors:</strong>{" "}
+                    {responseData.company_competitors}
+                  </p>
+                )}
+
+                {responseData.additional_insights &&
+                responseData.additional_insights.length > 0 ? (
+                  <div>
+                    <strong>Additional Insights:</strong>
+                    <ul>
+                      {responseData.additional_insights.map(
+                        (insight, index) => (
+                          <li key={index}>
+                            <p>
+                              <strong>Title:</strong> {insight.title}
+                            </p>
+                            <p>
+                              <strong>URL:</strong>{" "}
+                              <a
+                                href={insight.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {insight.url}
+                              </a>
+                            </p>
+                            <p>
+                              <strong>Description:</strong>{" "}
+                              {insight.description}
+                            </p>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                ) : (
+                  <p>
+                    <strong>Additional Insights:</strong> Not Found
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
+      <style jsx>{`
+        .form-title {
+          text-align: center;
+          font-size: 32px;
+          margin-bottom: 20px;
+        }
 
-      {/* Loader */}
-      {loading && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <p>Loading...</p>
-        </div>
-      )}
+        .form-subtitle {
+          text-align: center;
+          font-size: 18px;
+          margin-bottom: 30px;
+        }
 
-      {/* Display response data */}
-      {responseData && (
-        <div style={{ marginTop: "20px" }}>
-          <h2>Generated Data</h2>
+        .form-container {
+          max-width: 800px;
+          margin: auto;
+          margin-bottom: 40px;
+          padding: 40px;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 12px;
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
-          {responseData.professional_summary && (
-            <p>
-              <strong>Professional Summary:</strong>{" "}
-              {responseData.professional_summary}
-            </p>
-          )}
+        .form-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+          margin-bottom: 20px;
+        }
 
-          {responseData.social_media_links &&
-          responseData.social_media_links.length > 0 ? (
-            <div>
-              <strong>Social Media Links:</strong>
-              <ul>
-                {responseData.social_media_links.map((link, index) => (
-                  <li key={index}>
-                    <strong>{link.platform}:</strong>{" "}
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {link.url}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <p>
-              <strong>Social Media Links:</strong> Not Found
-            </p>
-          )}
+        .form-input,
+        .form-textarea {
+          flex: 1;
+          padding: 15px;
+          font-size: 18px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          width: 100%;
+        }
 
-          {responseData.company_summary && (
-            <p>
-              <strong>Company Summary:</strong> {responseData.company_summary}
-            </p>
-          )}
+        .form-textarea {
+          height: 100px;
+        }
 
-          {responseData.company_competitors && (
-            <p>
-              <strong>Company Competitors:</strong>{" "}
-              {responseData.company_competitors}
-            </p>
-          )}
+        .form-submit {
+          background-color: #000;
+          color: #fff;
+          padding: 10px 20px;
+          font-size: 20px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          width: 25%;
+        }
 
-          {responseData.additional_insights &&
-          responseData.additional_insights.length > 0 ? (
-            <div>
-              <strong>Additional Insights:</strong>
-              <ul>
-                {responseData.additional_insights.map((insight, index) => (
-                  <li key={index}>
-                    <p>
-                      <strong>Title:</strong> {insight.title}
-                    </p>
-                    <p>
-                      <strong>URL:</strong>{" "}
-                      <a
-                        href={insight.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {insight.url}
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Description:</strong> {insight.description}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <p>
-              <strong>Additional Insights:</strong> Not Found
-            </p>
-          )}
-        </div>
-      )}
+        @media (max-width: 600px) {
+          .form-group {
+            flex-direction: column;
+          }
+        }
+      `}</style>
     </div>
   );
 }
