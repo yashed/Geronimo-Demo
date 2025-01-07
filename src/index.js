@@ -24,8 +24,25 @@ const keepAlive = () => {
     });
 };
 
+const keepAliveService = () => {
+  const endpoint =
+    "https://bd3b73b5-b360-4c52-b210-5519f6919d65-dev.e1-us-east-azure.choreoapis.dev/testgeronimo/geronimo-v1-1/v1.0/";
+  fetch(endpoint)
+    .then((response) => {
+      if (response.ok) {
+        console.log("Keep-alive-service request successful.");
+      } else {
+        console.error("Keep-alive request failed:", response.statusText);
+      }
+    })
+    .catch((error) => {
+      console.error("Error during keep-alive request:", error);
+    });
+};
+
 // Start the keep-alive interval (every 4 minutes)
-setInterval(keepAlive, 3 * 60 * 1000); // 4 minutes
+setInterval(keepAlive, 1 * 60 * 1000);
+setInterval(keepAliveService, 2 * 60 * 1000);
 
 root.render(
   <React.StrictMode>
