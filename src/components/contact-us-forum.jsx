@@ -248,7 +248,7 @@ function ContactUsForm() {
 
                 {responseData.company_competitors && (
                   <p>
-                    <strong>Company Competitors:</strong>{" "}
+                    <strong>Competitors of Customer:</strong>{" "}
                     {responseData.company_competitors}
                   </p>
                 )}
