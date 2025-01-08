@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// const API_KEY = "geronimov1wso2";
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 function ContactUsForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -37,6 +40,7 @@ function ContactUsForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "GERONIMO-API-KEY": API_KEY,
         },
         body: JSON.stringify({
           name: formData.name,
@@ -44,6 +48,7 @@ function ContactUsForm() {
           country: formData.country,
           position: formData.jobRole,
           interest: formData.areaOfInterest,
+          email: formData.email,
         }),
       });
 
