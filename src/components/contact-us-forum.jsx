@@ -209,8 +209,18 @@ function ContactUsForm() {
             {/* Display response data */}
             {responseData && (
               <div style={{ marginTop: "20px" }}>
-                <h2>Generated Data</h2>
-
+                <div
+                  style={{
+                    marginTop: "20px",
+                    padding: "10px",
+                    backgroundColor: "#f9f9f9",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <p>{responseData.message}</p>
+                </div>
+                {/* 
                 {responseData.professional_summary && (
                   <p>
                     <strong>Professional Summary:</strong>{" "}
@@ -255,9 +265,9 @@ function ContactUsForm() {
                     <strong>Company Competitors:</strong>{" "}
                     {responseData.company_competitors}
                   </p>
-                )}
+                )} */}
 
-                {responseData.additional_insights &&
+                {/* {responseData.additional_insights &&
                 responseData.additional_insights.length > 0 ? (
                   <div>
                     <strong>Additional Insights:</strong>
@@ -291,7 +301,7 @@ function ContactUsForm() {
                   <p>
                     <strong>Additional Insights:</strong> Not Found
                   </p>
-                )}
+                )} */}
               </div>
             )}
           </div>
