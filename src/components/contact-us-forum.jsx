@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 const API_KEY = "geronimov1wso2";
-// const API_KEY = process.env.REACT_APP_API_KEY;
 
 function ContactUsForm() {
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    leadEmail: "",
+    responseEmail: "",
     phone: "",
     jobRole: "",
     company: "",
@@ -50,7 +50,7 @@ function ContactUsForm() {
             country: formData.country,
             position: formData.jobRole,
             interest: formData.areaOfInterest,
-            email: formData.email,
+            email: formData.responseEmail,
           }),
         }
       );
@@ -58,7 +58,6 @@ function ContactUsForm() {
       if (response.ok) {
         const data = await response.json();
         console.log("Response Data:", data);
-
         setResponseData(data);
       } else {
         const error = await response.json();
@@ -71,6 +70,69 @@ function ContactUsForm() {
       setLoading(false);
     }
   };
+
+  const countries = [
+    "Algeria",
+    "Argentina",
+    "Australia",
+    "Austria",
+    "Bangladesh",
+    "Belarus",
+    "Belgium",
+    "Brazil",
+    "Canada",
+    "Chile",
+    "China",
+    "Colombia",
+    "Cuba",
+    "Czech Republic",
+    "Denmark",
+    "Egypt",
+    "Ethiopia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hungary",
+    "India",
+    "Indonesia",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Kazakhstan",
+    "Kenya",
+    "Malaysia",
+    "Mexico",
+    "Morocco",
+    "Netherlands",
+    "New Zealand",
+    "Nigeria",
+    "Norway",
+    "Pakistan",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Russia",
+    "Saudi Arabia",
+    "Singapore",
+    "South Africa",
+    "South Korea",
+    "Spain",
+    "Sri Lanka",
+    "Sweden",
+    "Switzerland",
+    "Thailand",
+    "Turkey",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States",
+    "Venezuela",
+    "Vietnam",
+  ];
 
   return (
     <div>
@@ -93,17 +155,30 @@ function ContactUsForm() {
             />
           </div>
 
-          {/* Email and Phone */}
+          {/* Lead Mail and Response Mail */}
           <div className="form-group">
             <input
               type="email"
-              name="email"
-              placeholder="Email *"
-              value={formData.email}
+              name="leadEmail"
+              placeholder="Lead Mail *"
+              value={formData.leadEmail}
               onChange={handleChange}
               required
               className="form-input"
             />
+            <input
+              type="email"
+              name="responseEmail"
+              placeholder="Response Mail *"
+              value={formData.responseEmail}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+
+          {/* Phone */}
+          <div className="form-group">
             <input
               type="tel"
               name="phone"
@@ -155,10 +230,11 @@ function ContactUsForm() {
               className="form-input"
             >
               <option value="">Country *</option>
-              <option value="USA">USA</option>
-              <option value="Sri Lanka">Sri Lanka</option>
-              <option value="Canada">Canada</option>
-              <option value="UK">UK</option>
+              {countries.map((country, index) => (
+                <option key={index} value={country}>
+                  {country}
+                </option>
+              ))}
             </select>
             <select
               name="areaOfInterest"
@@ -168,12 +244,12 @@ function ContactUsForm() {
               className="form-input"
             >
               <option value="">Area of Interest *</option>
-              <option value="Technology">API Management</option>
-              <option value="Business">Integration</option>
-              <option value="Finance">Identity & Access Management</option>
-              <option value="Finance">Career Opportunities</option>
-              <option value="Finance">Finance</option>
-              <option value="Finance">Finance</option>
+              <option value="API Management">API Management</option>
+              <option value="Integration">Integration</option>
+              <option value="Identity & Access Management">
+                Identity & Access Management
+              </option>
+              <option value="Career Opportunities">Career Opportunities</option>
             </select>
           </div>
 
@@ -198,112 +274,7 @@ function ContactUsForm() {
         {/* Display Response */}
         {responseData && (
           <div style={{ marginTop: "20px" }}>
-            {/* Response Data */}
-            {/* Loader */}
-            {loading && (
-              <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <p>Loading...</p>
-              </div>
-            )}
-
-            {/* Display response data */}
-            {responseData && (
-              <div style={{ marginTop: "20px" }}>
-                <div
-                  style={{
-                    marginTop: "20px",
-                    padding: "10px",
-                    backgroundColor: "#f9f9f9",
-                    border: "1px solid #ccc",
-                    borderRadius: "8px",
-                  }}
-                >
-                  <p>{responseData.message}</p>
-                </div>
-                {/* 
-                {responseData.professional_summary && (
-                  <p>
-                    <strong>Professional Summary:</strong>{" "}
-                    {responseData.professional_summary}
-                  </p>
-                )}
-
-                {responseData.social_media_links &&
-                responseData.social_media_links.length > 0 ? (
-                  <div>
-                    <strong>Social Media Links:</strong>
-                    <ul>
-                      {responseData.social_media_links.map((link, index) => (
-                        <li key={index}>
-                          <strong>{link.platform}:</strong>{" "}
-                          <a
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {link.url}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p>
-                    <strong>Social Media Links:</strong> Not Found
-                  </p>
-                )}
-
-                {responseData.company_summary && (
-                  <p>
-                    <strong>Company Summary:</strong>{" "}
-                    {responseData.company_summary}
-                  </p>
-                )}
-
-                {responseData.company_competitors && (
-                  <p>
-                    <strong>Company Competitors:</strong>{" "}
-                    {responseData.company_competitors}
-                  </p>
-                )} */}
-
-                {/* {responseData.additional_insights &&
-                responseData.additional_insights.length > 0 ? (
-                  <div>
-                    <strong>Additional Insights:</strong>
-                    <ul>
-                      {responseData.additional_insights.map(
-                        (insight, index) => (
-                          <li key={index}>
-                            <p>
-                              <strong>Title:</strong> {insight.title}
-                            </p>
-                            <p>
-                              <strong>URL:</strong>{" "}
-                              <a
-                                href={insight.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {insight.url}
-                              </a>
-                            </p>
-                            <p>
-                              <strong>Description:</strong>{" "}
-                              {insight.description}
-                            </p>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                ) : (
-                  <p>
-                    <strong>Additional Insights:</strong> Not Found
-                  </p>
-                )} */}
-              </div>
-            )}
+            <p>Response: {responseData.message}</p>
           </div>
         )}
       </div>
