@@ -167,19 +167,6 @@ function ContactUsForm() {
               className="form-input"
             />
             <input
-              type="email"
-              name="responseEmail"
-              placeholder="Response Mail *"
-              value={formData.responseEmail}
-              onChange={handleChange}
-              required
-              className="form-input"
-            />
-          </div>
-
-          {/* Phone */}
-          <div className="form-group">
-            <input
               type="tel"
               name="phone"
               placeholder="Phone *"
@@ -264,6 +251,17 @@ function ContactUsForm() {
               className="form-textarea"
             />
           </div>
+          <div className="form-group-mail">
+            <input
+              type="email"
+              name="responseEmail"
+              placeholder="Response Mail *"
+              value={formData.responseEmail}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
           {/* Submit Button */}
           <button type="submit" className="form-submit" disabled={loading}>
@@ -273,7 +271,7 @@ function ContactUsForm() {
 
         {/* Display Response */}
         {responseData && (
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "40px" }}>
             <p>Response: {responseData.message}</p>
           </div>
         )}
@@ -306,6 +304,14 @@ function ContactUsForm() {
           display: flex;
           flex-wrap: wrap;
           gap: 15px;
+          margin-bottom: 20px;
+        }
+
+        .form-group-mail {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+          margin-top: 40px;
           margin-bottom: 20px;
         }
 
